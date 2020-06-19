@@ -1,0 +1,17 @@
+fieldset {
+  margin: 1em;
+}
+
+#fieldset-vital-dates label {
+  display: inline-block;
+  width: 10em;
+}
+
+textarea {
+  width: 100%;
+  height: 10em;
+}
+
+#age-at-birth, #place-of-baptism {
+  visibility: hidden;
+}
