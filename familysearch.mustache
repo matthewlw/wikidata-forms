@@ -61,12 +61,12 @@
         <legend>Vital dates</legend>
         {{#events}}
         <label for="date-of-{{event}}">Date of {{event}}: </label>
-        <input type="date" name="date-of-{{event}}" id="date-of-{{event}}">
+        <input type="text" name="date-of-{{event}}" id="date-of-{{event}}">
         <input type="checkbox" name="date-of-{{event}}-circa">Circa?</input>
         <label for="age-at-{{event}}">Age at {{event}}: </label>
         <input type="number" name="age-at-{{event}}" id="age-at-{{event}}">
         <label for="latest-date-{{event}}">Latest date: </label>
-        <input type="date" name="latest-date-{{event}}" id="latest-date-{{event}}">
+        <input type="text" name="latest-date-{{event}}" id="latest-date-{{event}}">
         <label for="place-of-{{event}}">Place of {{event}}: </label>
         <input class="awesomplete" name="place-of-{{event}}" id="place-of-{{event}}">
         <br>

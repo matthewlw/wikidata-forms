@@ -39,7 +39,15 @@ function formatStringQS (s) {
 }
 
 function formatDateQS(s) {
-  return '+' + s + 'T00:00:00Z/11'
+  if (^/\d{4}-\d{2}-\d{2}$/.match(s)) {
+    return '+' + s + 'T00:00:00Z/11'
+  } else if (^/\d{4}-\d{2}$/.match(s)) {
+    return '+' + s + '-00T00:00:00Z/10'
+  } else if (^/\d{4}$/.match(s)) {
+    return '+' + s + '-00-00T00:00:00Z/9'
+  } else {
+    alert('"' + s + '"' + ' is not a valid date')
+  }
 }
 
 function makeReference () {
@@ -95,8 +103,8 @@ function processRelation (subject, id, property, inverseProperty) {
 function processVitalDates (subject) {
   return [].concat(
     processVitalDate(subject, 'birth', 'P569', 'P19'),
-    processVitalDate(subject, 'baptism', 'P1636', 'P20'),
-    processVitalDate(subject, 'death', 'P570', ''),
+    processVitalDate(subject, 'baptism', 'P1636', ''),
+    processVitalDate(subject, 'death', 'P570', 'P20'),
     processVitalDate(subject, 'burial', 'P4602', 'P119')
   )
 }
