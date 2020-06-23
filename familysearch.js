@@ -39,11 +39,11 @@ function formatStringQS (s) {
 }
 
 function formatDateQS(s) {
-  if (^/\d{4}-\d{2}-\d{2}$/.match(s)) {
+  if (s.match(/^\d{4}-\d{2}-\d{2}$/)) {
     return '+' + s + 'T00:00:00Z/11'
-  } else if (^/\d{4}-\d{2}$/.match(s)) {
+  } else if (s.match(/^\d{4}-\d{2}$/)) {
     return '+' + s + '-00T00:00:00Z/10'
-  } else if (^/\d{4}$/.match(s)) {
+  } else if (s.match(/^\d{4}$/)) {
     return '+' + s + '-00-00T00:00:00Z/9'
   } else {
     alert('"' + s + '"' + ' is not a valid date')
@@ -76,7 +76,7 @@ function processFamily (subject) {
   parent_prop = gender_name === 'male' ? 'P22' : 'P25'
   gender_qid = gender_name === 'male' ? 'Q6581097' : 'Q6581072'
   return [].concat(
-    [subject + '\tP21\t' + gender_qid],
+    // [subject + '\tP21\t' + gender_qid],
     processRelation(subject, 'mother', 'P25', 'P40'),
     processRelation(subject, 'father', 'P22', 'P40'),
     processRelation(subject, 'child1', 'P40', parent_prop),
