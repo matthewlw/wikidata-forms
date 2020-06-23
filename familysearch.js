@@ -84,8 +84,7 @@ function processFamily (subject) {
     processRelation(subject, 'child3', 'P40', parent_prop),
     processRelation(subject, 'child4', 'P40', parent_prop),
     processRelation(subject, 'child5', 'P40', parent_prop),
-    processRelation(subject, 'child6', 'P40', parent_prop),
-    processRelation(subject, 'spouse', 'P26', 'P26')
+    processRelation(subject, 'child6', 'P40', parent_prop)
   )
 }
 
@@ -152,6 +151,60 @@ function processOtherPersonal (subject) {
   return statements
 }
 
+function processMarriage (subject) {
+  const spouse = readQID('spouse')
+  const marriageDate = document.getElementById('date-of-marriage').value
+  const marriagePlace = readQID('place-of-marriage')
+  let birthFamilyName = readQID('family-name-at-birth')
+  let marriedFamilyName = readQID('family-name-after-marriage')
+  const generalFamilyName = readQID('family-name')
+  if (generalFamilyName && birthFamilyName && !marriedFamilyName && generalFamilyName != birthFamilyName) {
+    marriedFamilyName = generalFamilyName
+  } else if (generalFamilyName && marriedFamilyName && !birthFamilyName && generalFamilyName != marriedFamilyName) {
+    birthFamilyName = generalFamilyName
+  }
+  const birthName = document.getElementById('full-name-at-birth').value
+  const marriedName = document.getElementById('full-name-after-marriage').value
+  let spouseStatement = []
+  let inverseSpouseStatement = []
+  let familyNameBirthStatement = []
+  let familyNameMarriedStatement = []
+  let birthNameStatement = []
+  if (spouse) {
+    spouseStatement.push(subject, 'P26', spouse)
+    inverseSpouseStatement.push(spouse, 'P26', subject)
+    if (marriageDate) {
+      spouseStatement.push('P580', formatDateQS(marriageDate))
+      inverseSpouseStatement.push('P580', formatDateQS(marriageDate))
+    }
+    if (marriagePlace) {
+      spouseStatement.push('P2842', marriagePlace)
+      inverseSpouseStatement.push('P2842', marriagePlace)
+    }
+    if (marriedName) {
+      spouseStatement.push('P2562', 'en:' + formatStringQS(marriedName))
+    }
+  }
+  if (birthFamilyName && marriedFamilyName) {
+    familyNameBirthStatement.push(subject, 'P734', birthFamilyName, 'P1534', 'Q8445')
+    familyNameMarriedStatement.push(subject, 'P734', marriedFamilyName, 'P828', 'Q8445')
+    if (marriageDate) {
+      familyNameBirthStatement.push('P582', formatDateQS(marriageDate))
+      familyNameMarriedStatement.push('P580', formatDateQS(marriageDate))
+    }
+  }
+  if (birthName) {
+    birthNameStatement = [subject, 'P1477', 'en:' + formatStringQS(birthName)]
+  }
+  return [
+    spouseStatement,
+    inverseSpouseStatement,
+    familyNameBirthStatement,
+    familyNameMarriedStatement,
+    birthNameStatement
+  ].filter(x => x.length).map(x => x.join('\t'))
+}
+
 window.addEventListener('DOMContentLoaded', () => {
   Array.from(document.getElementsByClassName('awesomplete')).forEach(setupAutocomplete)
   document.querySelector('form').addEventListener('submit', evt => {
@@ -163,7 +216,8 @@ window.addEventListener('DOMContentLoaded', () => {
       processNames(subject),
       processFamily(subject),
       processVitalDates(subject),
-      processOtherPersonal(subject)
+      processOtherPersonal(subject),
+      processMarriage(subject)
     )
     outputBox.value = allStatements.map(x => x + '\t' + reference).join('\n')
   })
