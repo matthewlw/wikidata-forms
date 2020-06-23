@@ -72,11 +72,8 @@ function processNames (subject) {
 }
 
 function processFamily (subject) {
-  gender_name = new FormData(document.querySelector('form')).get('sexgender')
-  parent_prop = gender_name === 'male' ? 'P22' : 'P25'
-  gender_qid = gender_name === 'male' ? 'Q6581097' : 'Q6581072'
+  parent_prop = new FormData(document.querySelector('form')).get('parent_prop')
   return [].concat(
-    // [subject + '\tP21\t' + gender_qid],
     processRelation(subject, 'mother', 'P25', 'P40'),
     processRelation(subject, 'father', 'P22', 'P40'),
     processRelation(subject, 'child1', 'P40', parent_prop),
@@ -90,13 +87,14 @@ function processFamily (subject) {
 
 function processRelation (subject, id, property, inverseProperty) {
   const object = readQID(id)
-  if (!object) {
-    return []
+  let statements = []
+  if (object) {
+    statements.push([subject, property, object].join('\t'))
+    if (inverseProperty) {
+      statements.push([object, inverseProperty, subject].join('\t'))
+    }
   }
-  return [
-    [subject, property, object].join('\t'),
-    [object, inverseProperty, subject].join('\t')
-  ]
+  return statements
 }
 
 function processVitalDates (subject) {
