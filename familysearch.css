@@ -2,9 +2,9 @@ fieldset {
   margin: 1em;
 }
 
-#fieldset-vital-dates label {
+#fieldset-vital-dates label, #fieldset-marriage label {
   display: inline-block;
-  width: 10em;
+  width: 12em;
 }
 
 textarea {

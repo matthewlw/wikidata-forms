@@ -51,13 +51,10 @@
         <input class="awesomplete" data-P31="Q5" name="child6" id="child6">
         <br>
         <label>This person is a: </label>
-        <input type="radio" name="sexgender" value="male" checked>
+        <input type="radio" name="sexgender" value="male">
         <label for="male">Father</label>
         <input type="radio" name="sexgender" value="female">
         <label for="female">Mother</label>
-        <br>
-        <label for="spouse">Spouse: </label>
-        <input class="awesomplete" data-P31="Q5" name="spouse" id="spouse">
       </fieldset>
       <fieldset id="fieldset-vital-dates">
         <legend>Vital dates</legend>
@@ -81,6 +78,31 @@
         <br>
         <label for="occupation">Occupation: </label>
         <input class="awesomplete" data-P31="Q12737077" name="occupation" id="occupation">
+      </fieldset>
+      <fieldset id="fieldset-marriage">
+        <legend>Marriage</legend>
+        <label for="spouse">Spouse: </label>
+        <input class="awesomplete" data-P31="Q5" name="spouse" id="spouse">
+        <br>
+        <label for="date-of-marriage">Date of marriage: </label>
+        <input type="text" name="date-of-marriage" id="date-of-marriage">
+        <input type="checkbox" name="date-of-marriage-circa">Circa?</input>
+        <label for="age-at-marriage">Age at marriage: </label>
+        <input type="number" name="age-at-marriage" id="age-at-marriage">
+        <label for="latest-date-marriage">Latest date: </label>
+        <input type="text" name="latest-date-marriage" id="latest-date-marriage">
+        <label for="place-of-marriage">Place of marriage: </label>
+        <input class="awesomplete" name="place-of-marriage" id="place-of-marriage">
+        <br>
+        <label for="family-name-at-birth">Birth family name: </label>
+        <input type="text" id="family-name-at-birth" class="awesomplete" data-P31="Q101352">
+        <label for="full-name-at-birth">Birth full name: </label>
+        <input type="text" id="full-name-at-birth">
+        <br>
+        <label for="family-name-after-marriage">Married family name: </label>
+        <input type="text" id="family-name-after-marriage" class="awesomplete" data-P31="Q101352">
+        <label for="full-name-at-marriage">Married full name: </label>
+        <input type="text" id="full-name-after-marriage">
       </fieldset>
       <button type="submit" id="submit-button">Convert to QuickStatements</button>
     </form>
